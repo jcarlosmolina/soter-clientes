@@ -1,0 +1,29 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h2 class="title">{{title}}</h2>
+        <div class="siuRegion">
+            <imes-lensesearch [field]="pInstalacion" *ngIf="pInstalacion.visible"
+                (selected)="processpinstalacionSelected($event)" (cleared)="cleanpinstalacion()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onpinstalacionChange')"
+                (searched)="doSearchAction('pInstalacion')"></imes-lensesearch>
+            <imes-preload [field]="pTipoContacto" *ngIf="pTipoContacto.visible"></imes-preload>
+            <imes-input-string [field]="pNombre" *ngIf="pNombre.visible"></imes-input-string>
+            <imes-input-string [field]="pTelefono1" *ngIf="pTelefono1.visible"></imes-input-string>
+            <imes-input-string [field]="pTelefono2" *ngIf="pTelefono2.visible"></imes-input-string>
+            <imes-input-string [field]="pFax" *ngIf="pFax.visible"></imes-input-string>
+            <imes-input-string [field]="pEmail" *ngIf="pEmail.visible"></imes-input-string>
+            <imes-input-definedselection [field]="pRecibePresupuestos" *ngIf="pRecibePresupuestos.visible"></imes-input-definedselection>
+            <imes-input-definedselection [field]="pRecibePartes" *ngIf="pRecibePartes.visible"></imes-input-definedselection>
+            <imes-input-definedselection [field]="pRecibeFacturas" *ngIf="pRecibeFacturas.visible"></imes-input-definedselection>
+            <imes-input-definedselection [field]="pPuedeFirmar" *ngIf="pPuedeFirmar.visible" (valueChanged)="onppuedefirmarChange()"></imes-input-definedselection>
+            <imes-input-string [field]="pDNI" *ngIf="pDNI.visible"></imes-input-string>
+            <imes-input-string [field]="pMovil" *ngIf="pMovil.visible"></imes-input-string>
+            <imes-input-definedselection [field]="pTipoFirma" *ngIf="pTipoFirma.visible" (valueChanged)="onptipofirmaChange()"></imes-input-definedselection>
+            <imes-input-string [field]="pIdDispositivo" *ngIf="pIdDispositivo.visible"></imes-input-string>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 siuButtons">
+            <button type="button" class="btnOk btn btn-primary" (click)="saveChanges()">{{langMng.translateText('app_SIU_BTNOK', '')}}</button>
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_SIU_BTNCANCEL', '')}}</button>
+        </div>
+    </ng-container>
+</form>

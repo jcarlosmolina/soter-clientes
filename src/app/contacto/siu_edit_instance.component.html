@@ -1,0 +1,28 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h2 class="title">{{title}}</h2>
+        <div class="siuRegion">
+            <imes-lensesearch [field]="puthisContacto" *ngIf="puthisContacto.visible"
+                (selected)="processputhiscontactoSelected($event)" (cleared)="cleanputhiscontacto()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onputhiscontactoChange')"
+                (searched)="doSearchAction('puthisContacto')"></imes-lensesearch>
+            <imes-input-string [field]="puNombre" *ngIf="puNombre.visible"></imes-input-string>
+            <imes-input-string [field]="puTelefono1" *ngIf="puTelefono1.visible"></imes-input-string>
+            <imes-input-string [field]="puTelefono2" *ngIf="puTelefono2.visible"></imes-input-string>
+            <imes-input-string [field]="puFax" *ngIf="puFax.visible"></imes-input-string>
+            <imes-input-string [field]="puEmail" *ngIf="puEmail.visible"></imes-input-string>
+            <imes-input-definedselection [field]="puRecibePresupuestos" *ngIf="puRecibePresupuestos.visible"></imes-input-definedselection>
+            <imes-input-definedselection [field]="puRecibePartes" *ngIf="puRecibePartes.visible"></imes-input-definedselection>
+            <imes-input-definedselection [field]="puRecibeFacturas" *ngIf="puRecibeFacturas.visible"></imes-input-definedselection>
+            <imes-input-definedselection [field]="puPuedeFirmar" *ngIf="puPuedeFirmar.visible" (valueChanged)="onpupuedefirmarChange()"></imes-input-definedselection>
+            <imes-input-string [field]="puDNI" *ngIf="puDNI.visible"></imes-input-string>
+            <imes-input-string [field]="puMovil" *ngIf="puMovil.visible"></imes-input-string>
+            <imes-input-definedselection [field]="puTipoFirma" *ngIf="puTipoFirma.visible" (valueChanged)="onputipofirmaChange()"></imes-input-definedselection>
+            <imes-input-string [field]="puIdDispositivo" *ngIf="puIdDispositivo.visible"></imes-input-string>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 siuButtons">
+            <button type="button" class="btnOk btn btn-primary" (click)="saveChanges()">{{langMng.translateText('app_SIU_BTNOK', '')}}</button>
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_SIU_BTNCANCEL', '')}}</button>
+        </div>
+    </ng-container>
+</form>

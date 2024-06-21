@@ -1,0 +1,17 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h2 class="title">{{title}}</h2>
+        <div class="siuRegion">
+            <imes-lensesearch [field]="puthisDocumento" *ngIf="puthisDocumento.visible"
+                (selected)="processputhisdocumentoSelected($event)" (cleared)="cleanputhisdocumento()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onputhisdocumentoChange')"
+                (searched)="doSearchAction('puthisDocumento')"></imes-lensesearch>
+            <imes-input-string [field]="puNotas" *ngIf="puNotas.visible"></imes-input-string>
+            <imes-input-string [field]="puObservacions" *ngIf="puObservacions.visible"></imes-input-string>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 siuButtons">
+            <button type="button" class="btnOk btn btn-primary" (click)="saveChanges()">{{langMng.translateText('app_SIU_BTNOK', '')}}</button>
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_SIU_BTNCANCEL', '')}}</button>
+        </div>
+    </ng-container>
+</form>

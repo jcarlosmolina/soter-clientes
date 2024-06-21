@@ -1,0 +1,32 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h2 class="title">{{title}}</h2>
+        <div class="siuRegion">
+            <imes-lensesearch [field]="puthisCliente" *ngIf="puthisCliente.visible"
+                (selected)="processputhisclienteSelected($event)" (cleared)="cleanputhiscliente()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onputhisclienteChange')"
+                (searched)="doSearchAction('puthisCliente')"></imes-lensesearch>
+            <div class="card argumentGroup" *ngIf="isGroupVisible('1')">
+                <div class="card-header">{{getGroupAlias('1')}}</div>
+                <div class="card-body">
+                    <imes-lensesearch [field]="pEntidadBancaria" *ngIf="pEntidadBancaria.visible"
+                        (selected)="processpentidadbancariaSelected($event)" (cleared)="cleanpentidadbancaria()"
+                        (keypressLenseSearch)="onKeypressLenseSearch('onpentidadbancariaChange')"
+                        (searched)="doSearchAction('pEntidadBancaria')"></imes-lensesearch>
+                    <imes-lensesearch [field]="pSucursalBancaria" *ngIf="pSucursalBancaria.visible"
+                        (selected)="processpsucursalbancariaSelected($event)" (cleared)="cleanpsucursalbancaria()"
+                        (keypressLenseSearch)="onKeypressLenseSearch('onpsucursalbancariaChange')"
+                        (searched)="doSearchAction('pSucursalBancaria')"></imes-lensesearch>
+                    <imes-input-string [field]="pDCCuentaBancaria" *ngIf="pDCCuentaBancaria.visible" (valueChanged)="onpdccuentabancariaChange()"></imes-input-string>
+                    <imes-input-string [field]="pCuentaBancaria" *ngIf="pCuentaBancaria.visible" (valueChanged)="onpcuentabancariaChange()"></imes-input-string>
+                    <imes-input-string [field]="pIBANCuentaBancaria" *ngIf="pIBANCuentaBancaria.visible" (valueChanged)="onpibancuentabancariaChange()"></imes-input-string>
+                    <imes-input-string [field]="pSwift" *ngIf="pSwift.visible"></imes-input-string>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 siuButtons">
+            <button type="button" class="btnOk btn btn-primary" (click)="saveChanges()">{{langMng.translateText('app_SIU_BTNOK', '')}}</button>
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_SIU_BTNCANCEL', '')}}</button>
+        </div>
+    </ng-container>
+</form>

@@ -1,0 +1,36 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h2 class="title">{{title}}</h2>
+        <div class="siuRegion">
+            <imes-lensesearch [field]="puthisCliente" *ngIf="puthisCliente.visible"
+                (selected)="processputhisclienteSelected($event)" (cleared)="cleanputhiscliente()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onputhisclienteChange')"
+                (searched)="doSearchAction('puthisCliente')"></imes-lensesearch>
+            <imes-input-definedselection [field]="pTipoViaFiscal" *ngIf="pTipoViaFiscal.visible"></imes-input-definedselection>
+            <imes-input-string [field]="pDireccionFiscal" *ngIf="pDireccionFiscal.visible"></imes-input-string>
+            <imes-lensesearch [field]="pMunicipio" *ngIf="pMunicipio.visible"
+                (selected)="processpmunicipioSelected($event)" (cleared)="cleanpmunicipio()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onpmunicipioChange')"
+                (searched)="doSearchAction('pMunicipio')"></imes-lensesearch>
+            <imes-input-string [field]="pEscaleraFiscal" *ngIf="pEscaleraFiscal.visible"></imes-input-string>
+            <imes-input-string [field]="pNumeroFiscal" *ngIf="pNumeroFiscal.visible"></imes-input-string>
+            <imes-input-string [field]="pPisoFiscal" *ngIf="pPisoFiscal.visible"></imes-input-string>
+            <imes-input-string [field]="pPuertaFiscal" *ngIf="pPuertaFiscal.visible"></imes-input-string>
+            <imes-lensesearch [field]="pCodigoPostal" *ngIf="pCodigoPostal.visible"
+                (selected)="processpcodigopostalSelected($event)" (cleared)="cleanpcodigopostal()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onpcodigopostalChange')"
+                (searched)="doSearchAction('pCodigoPostal')"></imes-lensesearch>
+            <imes-lensesearch [field]="pPais" *ngIf="pPais.visible"
+                (selected)="processppaisSelected($event)" (cleared)="cleanppais()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onppaisChange')"
+                (searched)="doSearchAction('pPais')"></imes-lensesearch>
+            <imes-input-string [field]="pTelefonoFiscal" *ngIf="pTelefonoFiscal.visible"></imes-input-string>
+            <imes-input-string [field]="pExtensionFiscal" *ngIf="pExtensionFiscal.visible"></imes-input-string>
+            <imes-input-string [field]="pFaxFiscal" *ngIf="pFaxFiscal.visible"></imes-input-string>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 siuButtons">
+            <button type="button" class="btnOk btn btn-primary" (click)="saveChanges()">{{langMng.translateText('app_SIU_BTNOK', '')}}</button>
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_SIU_BTNCANCEL', '')}}</button>
+        </div>
+    </ng-container>
+</form>

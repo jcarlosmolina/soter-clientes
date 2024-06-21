@@ -1,0 +1,19 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h2 class="title">{{title}}</h2>
+        <div class="siuRegion">
+            <imes-lensesearch [field]="pCliente" *ngIf="pCliente.visible"
+                (selected)="processpclienteSelected($event)" (cleared)="cleanpcliente()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onpclienteChange')"
+                (searched)="doSearchAction('pCliente')"></imes-lensesearch>
+            <imes-input-blob [field]="pFichero" *ngIf="pFichero.visible" (valueChanged)="onpficheroChange()"></imes-input-blob>
+            <imes-input-string [field]="pNombreDocumento" *ngIf="pNombreDocumento.visible"></imes-input-string>
+            <imes-input-string [field]="pNotas" *ngIf="pNotas.visible"></imes-input-string>
+            <imes-input-string [field]="pObservaciones" *ngIf="pObservaciones.visible"></imes-input-string>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 siuButtons">
+            <button type="button" class="btnOk btn btn-primary" (click)="saveChanges()">{{langMng.translateText('app_SIU_BTNOK', '')}}</button>
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_SIU_BTNCANCEL', '')}}</button>
+        </div>
+    </ng-container>
+</form>

@@ -1,0 +1,17 @@
+.labelForFile{
+    width: 75px;
+    height: auto;
+}
+
+.labelFileName {
+    width: calc(100% - 185px);
+    padding-left: 5px;
+}
+.imesBlobImage img {
+    margin-top: 5px;
+    width: 100%;
+}
+.imesBlobImage .imesBlobMultipleImage img{
+    padding: 5px;
+    width: 25%;
+}

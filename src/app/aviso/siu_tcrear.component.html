@@ -1,0 +1,15 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h2 class="title">{{title}}</h2>
+        <div class="siuRegion">
+            <imes-input-string [field]="pTitulo" *ngIf="pTitulo.visible"></imes-input-string>
+            <imes-preload [field]="pInstalacion" *ngIf="pInstalacion.visible"></imes-preload>
+            <imes-input-string [field]="pDescripcion" *ngIf="pDescripcion.visible"></imes-input-string>
+            <imes-input-definedselection [field]="pUrgencia" *ngIf="pUrgencia.visible"></imes-input-definedselection>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 siuButtons">
+            <button type="button" class="btnOk btn btn-primary" (click)="saveChanges()">{{langMng.translateText('app_SIU_BTNOK', '')}}</button>
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_SIU_BTNCANCEL', '')}}</button>
+        </div>
+    </ng-container>
+</form>

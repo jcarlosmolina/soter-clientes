@@ -1,0 +1,15 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h2 class="title">{{title}}</h2>
+        <div class="siuRegion">
+            <imes-lensesearch [field]="puthisDocuAdjunto" *ngIf="puthisDocuAdjunto.visible"
+                (selected)="processputhisdocuadjuntoSelected($event)" (cleared)="cleanputhisdocuadjunto()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onputhisdocuadjuntoChange')"
+                (searched)="doSearchAction('puthisDocuAdjunto')"></imes-lensesearch>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 siuButtons">
+            <button type="button" class="btnOk btn btn-primary" (click)="saveChanges()">{{langMng.translateText('app_SIU_BTNOK', '')}}</button>
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_SIU_BTNCANCEL', '')}}</button>
+        </div>
+    </ng-container>
+</form>

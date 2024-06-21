@@ -1,0 +1,16 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h3 class="title">{{title}}</h3>
+
+        <div class="master">
+            <h3 class="title">{{master.title}}</h3>
+            <div class="piuRegion">
+                <imes-actionsnavigations [queryIU]="master"></imes-actionsnavigations>
+                <imes-grid [piu]="master"></imes-grid>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 mdiuButtons">
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_CLOSE', '')}}</button>
+        </div>
+    </ng-container>
+</form>

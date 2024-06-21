@@ -1,0 +1,19 @@
+<p-dialog header="" [(visible)]="visible" [modal]="true" (onHide)="cancel()" [blockScroll]="true" position="top"
+    [style]="{'padding-top': '60px'}"
+    [draggable]="true" [closeOnEscape]="true" [closable]="true" [resizable]="false"
+    styleClass="col-xs-12 col-sm-11 col-md-11 modalForIU"
+    [contentStyle]="{'max-height':'500px', 'display': 'flow-root'}" >
+    <p-header>{{title}}</p-header>
+
+    <genericsiu *ngIf="selector=='genericsiu'"></genericsiu>
+
+    <imes-cliente-siu-tmodificarpersjuridica *ngIf="selector=='imes-cliente-siu-tmodificarpersjuridica'"></imes-cliente-siu-tmodificarpersjuridica>
+    <imes-cliente-siu-tmodificarlogo *ngIf="selector=='imes-cliente-siu-tmodificarlogo'"></imes-cliente-siu-tmodificarlogo>
+    <imes-documento-siu-edit-instance *ngIf="selector=='imes-documento-siu-edit-instance'"></imes-documento-siu-edit-instance>
+    <imes-documento-siu-tcrear4cliente *ngIf="selector=='imes-documento-siu-tcrear4cliente'"></imes-documento-siu-tcrear4cliente>
+    <imes-contacto-siu-tcrear4sistema *ngIf="selector=='imes-contacto-siu-tcrear4sistema'"></imes-contacto-siu-tcrear4sistema>
+    <imes-contacto-siu-edit-instance *ngIf="selector=='imes-contacto-siu-edit-instance'"></imes-contacto-siu-edit-instance>
+    <imes-contacto-siu-tcrear4instalacion *ngIf="selector=='imes-contacto-siu-tcrear4instalacion'"></imes-contacto-siu-tcrear4instalacion>
+
+</p-dialog>
+

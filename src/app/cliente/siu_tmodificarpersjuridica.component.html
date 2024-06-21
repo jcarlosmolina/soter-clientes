@@ -1,0 +1,21 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h2 class="title">{{title}}</h2>
+        <div class="siuRegion">
+            <imes-lensesearch [field]="puthisCliente" *ngIf="puthisCliente.visible"
+                (selected)="processputhisclienteSelected($event)" (cleared)="cleanputhiscliente()"
+                (keypressLenseSearch)="onKeypressLenseSearch('onputhisclienteChange')"
+                (searched)="doSearchAction('puthisCliente')"></imes-lensesearch>
+            <imes-input-string [field]="pRepresentanteLegal" *ngIf="pRepresentanteLegal.visible"></imes-input-string>
+            <imes-input-string [field]="pDNIRepresentante" *ngIf="pDNIRepresentante.visible"></imes-input-string>
+            <imes-input-string [field]="pNotario" *ngIf="pNotario.visible"></imes-input-string>
+            <imes-input-date [field]="pFechaConstitucion" *ngIf="pFechaConstitucion.visible"></imes-input-date>
+            <imes-input-string [field]="pProtocolo" *ngIf="pProtocolo.visible"></imes-input-string>
+            <imes-input-string [field]="pRegistroMercantil" *ngIf="pRegistroMercantil.visible"></imes-input-string>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 siuButtons">
+            <button type="button" class="btnOk btn btn-primary" (click)="saveChanges()">{{langMng.translateText('app_SIU_BTNOK', '')}}</button>
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_SIU_BTNCANCEL', '')}}</button>
+        </div>
+    </ng-container>
+</form>

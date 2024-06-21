@@ -1,0 +1,420 @@
+<div class="col-xs-12 col-sm-12 col-md-12 piuDisplaySet" style="overflow-x: hidden;">
+
+    <p-table #dt [columns]="piu.gridColumns" [value]="piu.gridData" [paginator]="true" paginatorDropdownAppendTo="body"
+        [rows]="piu.gridPaginationPageSize" [rowsPerPageOptions]="piu.gridPaginationPageSizeValues"
+        [alwaysShowPaginator]="false" selectionMode="{{piu.gridAllowMultiSelection ? 'multiple' : 'single'}}"
+        [(selection)]="piu.gridSelectedRows" [metaKeySelection]="true" [scrollable]="true" scrollWidth="100%"
+        [resizableColumns]="true" columnResizeMode="expand" (onRowSelect)="piu.onGridRowSelect($event)"
+        (onRowUnselect)="piu.onGridRowUnselect($event)" (onPage)="piu.onGridPaging($event)" [responsive]="true"
+        dataKey="oid" [lazy]="!piu.paginationInClient" (onLazyLoad)="piu.onGridLazyLoadData($event)"
+        [totalRecords]="piu.gridTotalInstances" (onSort)="piu.onGridSortData($event)"
+        sortMode="{{piu.paginationInClient && 'multiple'}}" 
+        (onColResize)="onColumnResize($event)" [styleClass]="expandDetails ? 'gridExpandDetails p-datatable-sm' : 'p-datatable-sm'"
+        rowExpandMode="multiple" [expandedRowKeys]="piu.gridExpandedRows">
+        <!-- [(first)]="piu.gridFirstInstanceDisplayed" -->
+        <ng-template pTemplate="caption" *ngIf="piu.orderCriteriaList.length > 1">
+            <div class="row">
+                <div class="gridCaption">
+                    <label>Orden</label>
+                    <select class="select-option form-control" [(ngModel)]="piu.orderCriteria" name="orderCriteria"
+                        autocomplete="off">
+                        <option class="option" *ngFor="let option of piu.orderCriteriaList" [ngValue]="option.key">
+                            {{option.value}}</option>
+                    </select>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col class="gridColExpandDetails" *ngIf="expandDetails">
+                <col class="gridColQuickSelect" *ngIf="piu.inSelectionMode">
+                <col class="gridColActivateAssociatedSrv" *ngIf="piu.associatedService != null && piu.associatedService.userIsAgent">
+                <ng-container *ngIf="!buttonsAtRight">
+                    <ng-container *ngFor="let acc of piu.actions">
+                        <col class="gridColAction" *ngIf="acc.visible && acc.showInGrid">
+                    </ng-container>
+                    <ng-container *ngFor="let nav of piu.navigations">
+                        <col class="gridColNavigation" *ngIf="nav.visible && nav.showInGrid">
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngFor="let col of columns">
+                    <col *ngIf="!col.hidden" [ngClass]="col.styleClass"
+                        [style.width]="col.applyWidth ? col.width + 'px' : ''">
+                </ng-container>
+                <ng-container *ngIf="buttonsAtRight">
+                    <ng-container *ngFor="let acc of piu.actions">
+                        <col class="gridColAction" *ngIf="acc.visible && acc.showInGrid">
+                    </ng-container>
+                    <ng-container *ngFor="let nav of piu.navigations">
+                        <col class="gridColNavigation" *ngIf="nav.visible && nav.showInGrid">
+                    </ng-container>
+                </ng-container>
+
+            </colgroup>
+        </ng-template>
+
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th class="gridColExpandDetails" *ngIf="expandDetails" pResizableColumn></th>
+
+                <th class="gridColQuickSelect" *ngIf="piu.inSelectionMode" pResizableColumn></th>
+                <th class="gridColActivateAssociatedSrv" pResizableColumn
+                    *ngIf="piu.associatedService != null && piu.associatedService.userIsAgent"></th>
+
+                <ng-container *ngIf="!buttonsAtRight">
+                    <ng-container *ngFor="let acc of piu.actions">
+                        <th class="gridColAction" *ngIf="acc.visible && acc.showInGrid"></th>
+                    </ng-container>
+                    <ng-container *ngFor="let nav of piu.navigations">
+                        <th class="gridColNavigation" *ngIf="nav.visible && nav.showInGrid"></th>
+                    </ng-container>
+                </ng-container>
+    
+                <ng-container *ngFor="let col of columns">
+                    <th *ngIf="col.sortable && !col.hidden" [pSortableColumn]="col.field" [ngClass]="col.styleClass"
+                        [style.width]="col.applyWidth ? col.width + 'px' : ''" class="gridHeader" pResizableColumn>
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                    <th *ngIf="!col.sortable && !col.hidden" [ngClass]="col.styleClass"
+                        [style.width]="col.applyWidth ? col.width + 'px' : ''" class="gridHeader" pResizableColumn>
+                        {{col.header}}
+                    </th>
+                </ng-container>
+                <ng-container *ngIf="buttonsAtRight">
+                    <ng-container *ngFor="let acc of piu.actions">
+                        <th class="gridColAction" *ngIf="acc.visible && acc.showInGrid"></th>
+                    </ng-container>
+                    <ng-container *ngFor="let nav of piu.navigations">
+                        <th class="gridColNavigation" *ngIf="nav.visible && nav.showInGrid"></th>
+                    </ng-container>
+                </ng-container>
+            </tr>
+            <ng-container *ngIf="piu.paginationInClient">
+                <tr class="gridFilterRow">
+                    <th class="gridColExpandDetails" *ngIf="expandDetails" pResizableColumn></th>
+
+                    <th class="gridColQuickSelect" *ngIf="piu.inSelectionMode" pResizableColumn></th>
+                    <ng-container *ngIf="!buttonsAtRight">
+                        <ng-container *ngFor="let acc of piu.actions">
+                            <th class="gridColAction" *ngIf="acc.visible && acc.showInGrid"></th>
+                        </ng-container>
+                        <ng-container *ngFor="let nav of piu.navigations">
+                            <th class="gridColNavigation" *ngIf="nav.visible && nav.showInGrid"></th>
+                        </ng-container>
+                    </ng-container>
+
+                    <th class="gridColActivateAssociatedSrv" pResizableColumn
+                        *ngIf="piu.associatedService != null && piu.associatedService.userIsAgent"></th>
+                    <ng-container *ngFor="let col of columns; index as i">
+                        <th *ngIf="col.filter && !col.hidden" [ngClass]="col.styleClass" pResizableColumn>
+                            <input type="text" style="width:100%" [(ngModel)]="piu.gridBuiltInFilterFields[i]"
+                                (change)="filterData()"
+                                autocomplete="off" />
+                        </th>
+                        <th *ngIf="!col.filter && !col.hidden" [ngClass]="col.styleClass" pResizableColumn>
+                        </th>
+                    </ng-container>
+                    <ng-container *ngIf="buttonsAtRight">
+                        <ng-container *ngFor="let acc of piu.actions">
+                            <th class="gridColAction" *ngIf="acc.visible && acc.showInGrid"></th>
+                        </ng-container>
+                        <ng-container *ngFor="let nav of piu.navigations">
+                            <th class="gridColNavigation" *ngIf="nav.visible && nav.showInGrid"></th>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+            </ng-container>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+            <tr [pSelectableRow]="rowData" [ngClass]="piu.getCSSClassForRow(rowData)">
+
+                <ng-container *ngIf="expandDetails">
+                    <td class="gridColExpandDetails">
+                        <a *ngIf="piu.customExpandDetails(rowData)" [pRowToggler]="rowData" (click)="onExpandDetail(rowData)">
+                            <em [ngClass]="expanded ? 'pi pi-minus-circle' : 'pi pi-plus-circle'"></em>
+                        </a>
+                    </td>                    
+                </ng-container>
+
+                <ng-container *ngIf="piu.inSelectionMode">
+                    <td class="gridColQuickSelect ui-resizable-column">
+                        <a class="pi pi-arrow-circle-left" (click)="piu.onGridQuickSelection(rowData)"></a>
+                    </td>
+                </ng-container>
+                <td class="gridColActivateAssociatedSrv ui-resizable-column"
+                    *ngIf="piu.associatedService != null && piu.associatedService.userIsAgent">
+                    <button type="button" class="btn btn-sm pi pi-arrow-circle-down"
+                        (click)="piu.onActivateAssociatedService(rowData)"></button>
+                </td>
+                <ng-container *ngIf="!buttonsAtRight">
+                    <ng-container *ngFor="let acc of piu.actions">
+                        <td class="gridColAction" *ngIf="acc.visible && acc.showInGrid">
+                            <button type="button" class="btn btn-sm" [ngClass]="acc.styleClass"
+                                [disabled]="!piu.isActionEnabledInGrid(acc.id, rowData)"
+                                [title]="acc.alias"
+                                (click)="piu.onGridClickCell(rowData, true, acc.id)"></button>
+                        </td>
+                    </ng-container>
+                    <ng-container *ngFor="let nav of piu.navigations">
+                        <td class="gridColNavigation" *ngIf="nav.visible && nav.showInGrid">
+                            <button type="button" class="btn btn-sm" [ngClass]="nav.styleClass"
+                                [disabled]="!piu.isNavigationEnabledInGrid(nav.id, rowData)"
+                                [title]="nav.alias"
+                                (click)="piu.onGridClickCell(rowData, false, nav.id)"></button>
+                        </td>
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngFor="let col of columns">
+                    <ng-container *ngIf="(!piu.editableGrid || !col.editable) && !col.hidden">
+                        <td [ngClass]="getCssClasses(col.styleClass, rowData[col.field])" [style.width]="col.applyWidth ? col.width + 'px' : ''"
+                            class="ui-resizable-column">
+                            <span class="ui-column-title">{{col.header}}</span>
+                            <ng-container *ngIf="col.type === 0">
+                                <ng-container *ngIf="!col.showPopup">
+                                    <ng-container *ngIf="col.linkIndex >=0">
+                                        <span>
+                                            <a
+                                                (click)="piu.onGridClickCell(rowData, col.linkIsAction, col.linkIndex)">{{rowData[col.field]}}</a>
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="col.linkIndex < 0">
+                                        <span [title]="rowData[col.field]">{{rowData[col.field]}}</span>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="col.showPopup">
+                                    <ng-container *ngIf="col.linkIndex >=0">
+                                        <span class="gridTextEnlarge">
+                                            <a (click)="piu.onGridClickCell(rowData, col.linkIsAction, col.linkIndex)">{{rowData[col.field]}}</a>
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="col.linkIndex < 0">
+                                        <span class="gridTextEnlarge">{{rowData[col.field]}}</span>
+                                    </ng-container>
+
+                                    <button type="button" class="btn btn-sm pi pi-ellipsis-h" style="padding: 0px;background-color: #ffffff;float: right;"
+                                        (click)="rowData['_inpopup' + col.field]=true"></button>
+                                    <p-dialog [header]="col.header" [(visible)]="rowData['_inpopup' + col.field]" modal="true" blockScroll="true"
+                                        styleClass="imesDialogEditor" baseZIndex="10000"
+                                        [style]="{width: '80vw', 'height': '80vh', 'box-shadow': 'none', 'border': '0px', 'padding-top': '60px'}"
+                                        position="top" closeOnEscape="true" dismissableMask="true" closable="true">
+                                        <textarea class="form-control" [ngModel]="rowData[col.field]" style="height: 100%;"
+                                            disabled="true" autocomplete="off"></textarea>
+                                        <p-footer>
+                                            <button type="button" class="btnCancel btn btn-danger" (click)="rowData['_inpopup' + col.field]=false">{{langMng.translateText('app_CLOSE', '')}}</button>
+                                        </p-footer>
+                                    </p-dialog>            
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="col.type === 1">
+                                <ng-container *ngIf="col.linkIndex >=0">
+                                    <span>
+                                        <!--<a
+                                            (click)="piu.onGridClickCell(rowData, col.linkIsAction, col.linkIndex)">{{rowData[col.field] | number : col.mask}}</a>-->
+                                        <a
+                                            (click)="piu.onGridClickCell(rowData, col.linkIsAction, col.linkIndex)">{{col.dataType != "real" ? rowData[col.field] : (rowData[col.field] | number: '1.2-2' : col.mask) }}</a>
+                                    </span>
+                                </ng-container>
+                                <ng-container *ngIf="col.linkIndex < 0">
+                                    <!-- <span>{{rowData[col.field] | number : col.mask}}</span> -->
+                                    <span>{{col.dataType != "real" ? rowData[col.field] : (rowData[col.field] | number: '1.2-2' : col.mask) }} </span>   
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="col.type === 2">
+                                <ng-container *ngIf="col.linkIndex >=0">
+                                    <span>
+                                        <a
+                                            (click)="piu.onGridClickCell(rowData, col.linkIsAction, col.linkIndex)">{{piu.getValueFromDefinedSelection(col, rowData[col.field])}}</a>
+                                    </span>
+                                </ng-container>
+                                <ng-container *ngIf="col.linkIndex < 0">
+                                    <span>{{piu.getValueFromDefinedSelection(col, rowData[col.field])}}</span>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="col.type === 3">
+                                <ng-container *ngIf="col.linkIndex >=0">
+                                    <span>
+                                        <a
+                                            (click)="piu.onGridClickCell(rowData, col.linkIsAction, col.linkIndex)">{{rowData[col.field] | date: col.mask}}</a>
+                                    </span>
+                                </ng-container>
+                                <ng-container *ngIf="col.linkIndex < 0">
+                                    <span>{{rowData[col.field] | date: col.mask}}</span>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="col.type === 4">
+                                <ng-container *ngIf="col.linkIndex >=0">
+                                    <span>
+                                        <img *ngIf="rowData[col.field]" [src]="util.getSafeUrl('data:image/jpg;base64,' + rowData[col.field])"
+                                            (click)="piu.onGridClickCell(rowData, col.linkIsAction, col.linkIndex)"
+                                            alt="image data" />
+                                    </span>
+                                </ng-container>
+                                <ng-container *ngIf="col.linkIndex < 0">
+                                    <img *ngIf="rowData[col.field]" [src]="util.getSafeUrl('data:image/jpg;base64,' + rowData[col.field])"
+                                        alt="image data" />
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="col.type === 5">
+                                <button type="button" class="btn"
+                                    (click)="piu.onGridClickCell(rowData, col.linkIsAction, col.linkIndex)">{{col.header}}</button>
+                            </ng-container>
+                        </td>
+                    </ng-container>
+                    <ng-container *ngIf="piu.editableGrid && col.editable && !col.hidden">
+                        <td pEditableColumn [ngClass]="col.styleClass"
+                            [style.width]="col.applyWidth ? col.width + 'px' : ''"
+                            class="editableCell ui-resizable-column">
+                            <span class="ui-column-title">{{col.header}}</span>
+                            <p-cellEditor>
+                                <ng-container *ngIf="col.type === 0">
+                                    <ng-template pTemplate="input">
+                                        <input type="text" [(ngModel)]="rowData[col.field]" [name]="col.field"
+                                            (ngModelChange)="piu.onCellEditComplete(rowData, col.field)">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">{{rowData[col.field]}}</ng-template>
+                                </ng-container>
+                                <ng-container *ngIf="col.type === 1">
+                                    <ng-template pTemplate="input">
+                                        <input type="number" [(ngModel)]="rowData[col.field]" [name]="col.field"
+                                            (ngModelChange)="piu.onCellEditComplete(rowData, col.field)">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">{{rowData[col.field] | number : col.mask}}
+                                    </ng-template>
+                                </ng-container>
+                                <ng-container *ngIf="col.type === 2">
+                                    <ng-template pTemplate="input">
+                                        <select class="select-option form-control" required
+                                            [(ngModel)]="rowData[col.field]" name="col.field"
+                                            (ngModelChange)="piu.onCellEditComplete(rowData, col.field)">
+                                            <option class="option" *ngFor="let option of col.options"
+                                                [ngValue]="option.key">{{option.value}}</option>
+                                        </select>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{piu.getValueFromDefinedSelection(col, rowData[col.field])}}</ng-template>
+                                </ng-container>
+                                <ng-container *ngIf="col.type === 3">
+                                    <ng-template pTemplate="input">
+                                        <p-calendar class="primengCalendar"
+                                            inputStyleClass="form-control" appendTo="body"
+                                            [dateFormat]="langMng.inputDateFormat" [firstDayOfWeek]="langMng.firstDayOfWeek"
+                                            [(ngModel)]="rowData[col.field]" [showIcon]="false"
+                                            [showTime]="col.dataType == 'time' || col.dataType == 'datetime'"
+                                            [timeOnly]="col.dataType == 'time'"
+                                            (ngModelChange)="piu.onCellEditComplete(rowData, col.field)"
+                                            [name]="col.field">
+                                        </p-calendar>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">{{rowData[col.field] | date: col.mask}}
+                                    </ng-template>
+                                </ng-container>
+                            </p-cellEditor>
+                        </td>
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="buttonsAtRight">
+                    <ng-container *ngFor="let acc of piu.actions">
+                        <td class="gridColAction" *ngIf="acc.visible && acc.showInGrid">
+                            <button type="button" class="btn btn-sm" [ngClass]="acc.styleClass"
+                                [disabled]="!piu.isActionEnabledInGrid(acc.id, rowData)"
+                                [title]="acc.alias"
+                                (click)="piu.onGridClickCell(rowData, true, acc.id)"></button>
+                        </td>
+                    </ng-container>
+                    <ng-container *ngFor="let nav of piu.navigations">
+                        <td class="gridColNavigation" *ngIf="nav.visible && nav.showInGrid">
+                            <button type="button" class="btn btn-sm" [ngClass]="nav.styleClass"
+                                [disabled]="!piu.isNavigationEnabledInGrid(nav.id, rowData)"
+                                [title]="nav.alias"
+                                (click)="piu.onGridClickCell(rowData, false, nav.id)"></button>
+                        </td>
+                    </ng-container>
+                </ng-container>
+
+            </tr>
+        </ng-template>
+
+        <!-- Expand details area -->
+        <ng-container *ngIf="expandDetails">
+            <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                <tr>
+                    <td [attr.colspan]="getColSpanDetails()">
+
+                        <imes-details-in-row-grid [rowoid]="rowData.oid" [mdiu]="piu.masterDetailContainer"></imes-details-in-row-grid>
+                          
+                    </td>
+                </tr>
+            </ng-template>
+        </ng-container>
+
+        <ng-template pTemplate="summary">
+            <div class="row">
+                <div class="gridSummary">
+                    <div class="gridSummaryLeft">
+                        <button type="button" class="btn  btn-sm pi pi-refresh gridFooterBtnRefresh"
+                            (click)="piu.onRefresh()"
+                            [title]="langMng.translateText('app_PIU_REFRESHBTN', '')"></button>
+                        <button type="button" *ngIf="piu.gridData && piu.gridData.length > 0"
+                            class="btn btn-sm gridFooterBtnExport" (click)="exportExcel()"
+                            [title]="langMng.translateText('app_PIU_EXPEXCELBTN', '')"></button>
+                        <button type="button" *ngIf="piu.gridData && piu.gridData.length > 0"
+                            class="btn btn-sm gridFooterBtnExportAll" (click)="exportExcelAll()"
+                            [title]="langMng.translateText('app_PIU_EXPALLEXCELBTN', '')"></button>
+                        <span class="gridFooterNumElements" *ngIf="piu.showTotalSummary">{{piu.totalSummary}}</span>
+                        </div>
+                    <div class="gridSummaryRight">
+                        <span class="ui-column-title">{{piu.getGridTotalInstancesText()}}</span>
+                        <div class="btn-group dropleft">
+                            <button type="button" *ngIf="piu.editableGrid"
+                                class="btn btn-sm pi pi-save gridFooterBtnSave"
+                                (click)="piu.onSaveChangesEditableGrid()"
+                                [title]="langMng.translateText('app_SIU_BTNSAVE', '')"></button>
+
+                            <ng-container *ngIf="piu.showPreferences()">
+                                <div class="btn-group dropleft gridPreferencesMenu">
+                                    <button class="btn btn-sm pi pi-cog" role="button" id="dropdownMenuPref"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuPref">
+                                        <a class="dropdown-item"
+                                            (click)="piu.onGridPreferences()">{{langMng.translateText('app_PREF_MENUPREF', '')}}</a>
+                                        <a class="dropdown-item"
+                                            (click)="piu.saveGridPreferences()">{{langMng.translateText('app_PREF_MENUSAVE', '')}}</a>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+
+                            <ng-container *ngIf="piu.showGlobalLog || piu.showClassLog || piu.showInstanceLog">
+
+                                <div class="btn-group dropleft gridSummaryMenu">
+                                    <button class="btn btn-sm pi pi-eye" role="button" id="dropdownMenuLog"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLog">
+
+                                        <a *ngIf="piu.showGlobalLog" class="dropdown-item"
+                                            (click)="piu.onNavigateLogGlobal()">{{langMng.translateText('app_GLOBALLOG', 'Global Log')}}</a>
+                                        <a *ngIf="piu.showClassLog" class="dropdown-item"
+                                            (click)="piu.onNavigateLogClass()">{{langMng.translateText('app_CLASSLOG', 'Log Class')}}</a>
+                                        <a *ngIf="piu.showInstanceLog" class="dropdown-item"
+                                            (click)="piu.onNavigateLoginstance()">{{langMng.translateText('app_INSTANCELOG', '')}}</a>
+
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+    </p-table>
+</div>

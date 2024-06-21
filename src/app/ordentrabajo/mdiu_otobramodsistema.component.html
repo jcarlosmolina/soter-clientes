@@ -1,0 +1,25 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h3 class="title">{{title}}</h3>
+
+        <div class="master">
+            <h3 class="title">{{master.title}}</h3>
+            <div class="iiuRegion">
+                <imes-actionsnavigations [queryIU]="master"></imes-actionsnavigations>
+                <!-- Display Set elements -->
+                <div class="card displaySet">
+                    <div class="card-header">{{master.title}}</div>
+                    <div class="card-body">
+                        <imes-input-string [field]="master.dseIdProyectoDrv" *ngIf="master.dseIdProyectoDrv.visible"></imes-input-string>
+                    </div>
+                </div>
+                <div *ngIf="master.showInstanceLog" class="iiuLogNavigation">
+                    <a (click)="master.onNavigateLoginstance()">{{master.langMng.translateText('app_INSTANCELOG', 'Log Instance')}}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 mdiuButtons">
+            <button type="button" class="btnCancel btn btn-danger" (click)="processCancel()">{{langMng.translateText('app_CLOSE', '')}}</button>
+        </div>
+    </ng-container>
+</form>

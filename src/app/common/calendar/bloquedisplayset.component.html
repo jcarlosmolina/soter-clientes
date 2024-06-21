@@ -1,0 +1,30 @@
+
+<div style="width: 100%;float: left;height: 100%;border: 1px solid lightgrey;overflow-y: auto;">
+    <ng-container *ngFor="let row of piu.gridData">
+        <div class="imesbloque" [style.background-color]="getColorFondo(row)"
+            [style.color]="getColorTexto(row)"
+            [style.width]="anchoInstancia">
+            <label *ngIf="piu.actions.length > 0" (click)="piu.onGridClickCell(row, true, 0)">{{getTexto(row)}}</label>
+            <label *ngIf="piu.actions.length == 0">{{getTexto(row)}}</label>
+            <div class="menuPopup">
+                <button class="btnDesplegable pi pi-angle-down" data-toggle="dropdown"></button>
+                <ul class="dropdown-menu">
+                    <ng-container *ngFor="let acc of piu.actions; let i = index">
+                        <ng-container *ngIf="acc.visible && i > 0">
+                            <li>
+                                <a (click)="piu.onGridClickCell(row, true, i)">{{acc.alias}}</a>
+                            </li>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngFor="let nav of piu.navigations; let i = index">
+                        <ng-container *ngIf="nav.visible">
+                            <li>
+                                <a (click)="piu.onGridClickCell(row, false, i)">{{nav.alias}}</a>
+                            </li>
+                        </ng-container>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+    </ng-container>
+</div>

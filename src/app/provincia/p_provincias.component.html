@@ -1,0 +1,37 @@
+﻿<form novalidate>
+    <ng-container *ngIf="visible">
+        <h3 class="title">{{title}}</h3>
+        <div class="piuRegion">
+            <imes-actionsnavigations [queryIU]="this"></imes-actionsnavigations>
+            <div class="filter col-xs-12 col-sm-12 col-md-12 ">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a (click)="setActiveFilterIndex(0)" class="nav-link"
+                            [ngClass]="{'active': activeFilter.index == 0}" role="tab" tabindex
+                            data-toggle="tab">{{f0.title}}
+                            <button *ngIf="activeFilter.index == 0 && hideFilters && activeFilterIsHidden" [ngClass]="getShowFilterCSSClass()" (click)="showCurrentFilter()"
+                                aria-label="Show" title="Show"></button>
+                            <button *ngIf="activeFilter.index == 0 && hideFilters && !activeFilterIsHidden" [ngClass]="getHideFilterCSSClass()" (click)="hideCurrentFilter()"
+                                aria-label="Hide" title="Hide"></button>
+                        </a>
+                    </li>
+                </ul>
+                <div *ngIf="!hideFilters || !activeFilterIsHidden" class="tab-content filterContent">
+                        <div class="tab-pane" [ngClass]=" {'active': activeFilter.index == 0}" role="tabpanel">
+                            <div class="filterVariables">
+                                <imes-input-string [field]="f0.vfNombre" *ngIf="f0.vfNombre.visible"></imes-input-string>
+                            </div>
+                            <div class="filterButtons">
+                                <button class="btn btn-outline-secondary btn-sm pi pi-search" (click)="f0.search()"
+                                    aria-label="Search"></button>
+                                <button class="btn btn-outline-secondary btn-sm pi pi-trash" (click)="f0.clean()"
+                                    aria-label="Clean"></button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <imes-grid [piu]="this"></imes-grid>
+        </div>
+        <imes-piubuttons [piu]="this"></imes-piubuttons>
+    </ng-container>
+</form>

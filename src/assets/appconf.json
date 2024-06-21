@@ -1,0 +1,6 @@
+{
+  "url_log_error": "",
+  "baseurl_LOCAL": "https://localhost:44361",
+  "baseurl_AZURE": "https://sotersrv.azurewebsites.net",
+  "baseurl": "https://sotersrv.azurewebsites.net"  
+}

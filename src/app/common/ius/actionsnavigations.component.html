@@ -1,0 +1,46 @@
+<ng-container *ngIf="anyVisible()">
+    <div class="btn-toolbar col-xs-12 col-sm-12 col-md-12 actionsNavigations" role="toolbar">
+        <div class="btn-group action">
+            <!-- <ng-container *ngFor="let action of queryIU.actions"> -->
+            <ng-container *ngFor="let action of getActionsInButtons()">
+                    <button type="button" class="btn btn-primary btn-sm" [ngClass]="action.styleClass"
+                        [disabled]="!queryIU.isActionEnabled(action.id)"
+                        (click)="queryIU.doAction(action.id)">{{action.alias}}</button>
+            </ng-container>
+        </div>
+        <div class="btn-group navigation">
+            <!-- <ng-container *ngFor="let navigation of queryIU.navigations"> -->
+            <ng-container *ngFor="let navigation of getNavigationsInButtons()">
+                    <button type="button" class="btn btn-primary btn-sm" [ngClass]="navigation.styleClass"
+                        [disabled]="!queryIU.isNavigationEnabled(navigation.id)"
+                        (click)="queryIU.doNavigation(navigation.id)">{{navigation.alias}}</button>
+            </ng-container>
+        </div>
+
+        <div *ngIf="menuVisible()" class="btn-group action" role="group">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
+                    aria-expanded="false">
+                </button>
+                <div class="dropdown-menu accNavMenu">
+                    <!-- <ng-container *ngFor="let action of queryIU.actions"> -->
+                    <ng-container *ngFor="let action of getActionsInMenu()">
+                            <button type="button" class="btn btn-link" 
+                                style="width: 100%;text-align: left;"
+                                [disabled]="!queryIU.isActionEnabled(action.id)"
+                                (click)="queryIU.doAction(action.id)">{{action.alias}}</button>
+                    </ng-container>
+                    <ng-container *ngFor="let navigation of getNavigationsInMenu()">
+                            <button type="button" class="btn btn-link" 
+                                style="width: 100%;text-align: left;"
+                                [disabled]="!queryIU.isNavigationEnabled(navigation.id)"
+                                (click)="queryIU.doNavigation(navigation.id)">{{navigation.alias}}</button>
+                    </ng-container>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</ng-container>
